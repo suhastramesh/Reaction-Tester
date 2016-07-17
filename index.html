@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Guessing game</title>
+    
+    <meta charset = "utf-8" />
+    <meta http-equiv="Content-type" content="text/html"; charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    
+    <style>
+        
+        #box {
+        
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            display: none;
+            position: relative;
+        
+        }
+        
+        body {
+        
+            font-family : Geneva;
+        
+        }
+    
+    </style>
+   
+</head>
+
+<body>
+    <p>Please click the shapes on the screen in the least possible time</p>
+    <p>Your reaction time is = <span id="demo"></span>s</p>
+    <p>Comment: <span id="message"> </span></p>
+    
+    
+    <div id="box"></div>
+    
+    
+    <script>
+        
+        var boxCreate; var boxClicked;var reactTime;
+        
+        function randomColorGenerator() {
+        
+            var hexa = '0123456789ABCDEF'.split('');
+            var colorStart = '#';
+            for (var i = 0; i < 6; i++) {
+            
+                colorStart += hexa[Math.round(Math.random() * 15)];
+            
+            }
+            return colorStart;
+        
+        }
+        //alert(randomColorGenerator());
+        
+        
+        
+        function makeBox() {
+        
+            var time = Math.random();
+            time = time * 3000;
+            setTimeout(function() {
+            
+                if (Math.random() > 0.5) {
+                
+                    document.getElementById("box").style.borderRadius = "100px";
+                
+                
+                } else {
+                
+                    document.getElementById("box").style.borderRadius = "0px";
+                
+                }
+                
+                var x = Math.random()
+                
+                x = x * 300;
+                
+                var y = Math.random()
+                
+                y = y * 400;
+                
+                document.getElementById("box").style.top = x+"px";
+                document.getElementById("box").style.left = y+"px";
+                
+                document.getElementById("box").style.backgroundColor = randomColorGenerator();
+                document.getElementById("box").style.display = "block";
+                
+                boxCreate = Date.now();
+        
+            }, time)
+        
+        }
+        
+        
+        document.getElementById("box").onclick= function() {
+            
+            boxClicked = Date.now();
+            reactTime = (boxClicked - boxCreate) / 1000;
+            //alert(reactTime);
+            
+            document.getElementById("demo").innerHTML = reactTime ;
+            document.getElementById("box").style.display = "none";
+            
+            
+            makeBox();
+            var good = "You are good at this!!"; var ok = "C'mon you are no snail, Click faster";
+            
+            if(reactTime <= 1 ) {
+    
+                document.getElementById("message").innerHTML = good;
+        
+            } else {
+    
+                document.getElementById("message").innerHTML = ok;
+    
+            }
+        
+        }
+        
+        makeBox();
+        
+        
+        
+        
+    
+    
+    
+    </script>
+    
+</body>
+</html>
